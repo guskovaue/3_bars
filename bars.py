@@ -2,21 +2,11 @@ import json
 
 
 def load_data(filepath):
-    """
-    Extract json from file file.txt and decode it into python dict
-     :param filepath: str type:
-     :return: dict type:
-     """
     with open(filepath, 'r') as file:
         return json.loads(file.read())
 
 
-def _get_name_size_dict(data):
-    """
-    Extract from the full data only bars names and corresponding amount of seats
-     :param data: dict type:
-     :return: dict type:
-     """
+def get_name_size_dict(data):
     bar_size_dict = {}
     for bar_info in data['features']:
         bar_size_dict[bar_info['properties']['Attributes']['Name']] = bar_info['properties']['Attributes']['SeatsCount']
@@ -24,12 +14,7 @@ def _get_name_size_dict(data):
 
 
 def get_biggest_bar(data):
-    """
-    Print biggest bar's names
-      :param data: dict type:
-      :return: None
-      """
-    bar_size_dict = _get_name_size_dict(data)
+    bar_size_dict = get_name_size_dict(data)
     biggest_size = max(bar_size_dict.values())
     biggest_size_bars = []
     for key, value in bar_size_dict.items():
@@ -44,12 +29,7 @@ def get_biggest_bar(data):
 
 
 def get_smallest_bar(data):
-    """
-    Print smallest bar's names
-     :param data: dict type:
-     :return: None
-     """
-    bar_size_dict = _get_name_size_dict(data)
+    bar_size_dict = get_name_size_dict(data)
     smallest_size = min(bar_size_dict.values())
     smallest_size_bars = []
     for key, value in bar_size_dict.items():
@@ -64,13 +44,6 @@ def get_smallest_bar(data):
 
 
 def get_closest_bar(data, x1, y1):
-    """
-    Find closest bar
-     :param data: dict type:
-     :param x1: float: longitude
-     :param y1: float: latitude
-     :return: None
-     """
     min_distance = -1
     closest_bar = ''
     for bar_info in data['features']:
